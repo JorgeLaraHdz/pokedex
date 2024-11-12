@@ -1,0 +1,21 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Noticias
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+
+  <ion-card *ngFor="let article of data" (click)="ir(article.url)">
+    
+    <img src={{article.urlToImage}}/>
+    <ion-card-header>
+      <ion-card-title>{{ article.title }}</ion-card-title>
+      <ion-card-subtitle>{{ article.author }}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content style="text-align: justify;">
+      {{ article.description }}
+    </ion-card-content>
+  </ion-card>
+</ion-content>

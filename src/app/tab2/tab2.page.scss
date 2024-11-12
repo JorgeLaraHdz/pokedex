@@ -1,0 +1,53 @@
+ion-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.center-card {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+ion-card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra con un ligero desenfoque */
+    border-radius: 20px; /* Esquinas redondeadas */
+    height: 50%; /* Altura al 50% del contenido */
+    width: 80%; /* Ancho al 80% del contenido */
+    margin-top: 35PX;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+ion-card img {
+    width: 50%; /* Ajusta el tamaño de la imagen */
+    height: auto;
+    margin-bottom: 16px; /* Espacio debajo de la imagen */
+}
+
+ion-card-header, ion-card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+ion-toolbar ion-title {
+    text-align: center;
+}
+
+ion-toolbar ion-searchbar {
+    --border-radius: 20px;
+    margin-bottom: 20px;
+}
+
+ion-toolbar {
+    --background: #B91F15; /* Color de fondo de la barra de herramientas */
+}
+
+ion-card-title{
+    text-transform: uppercase;
+}

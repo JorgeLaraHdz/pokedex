@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Pokedex</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar 
+    [(ngModel)]="query"
+    show-cancel-button="focus" 
+    placeholder="Buscar Pokemon"
+    (ionInput)="onSearchChange($event)"
+    (ionClear)="onSearchCancel()"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  @if(suggestions.length>0){
+    <ion-list>
+      @for(pokemon of suggestions;track pokemon){
+        <ion-item (click)="onSuggestionClick(pokemon.name)">
+          {{ pokemon.name }}
+        </ion-item>
+      }
+      
+    </ion-list>
+  }
+  
+  @if (showRandom) {
+    <div class="center-card">
+      <ion-card>
+        <img alt="Imagen de pokemon aleatoria" [src]="data?.sprites?.other?.['official-artwork']?.front_default" />
+        <ion-card-header>
+          <ion-card-title>{{data?.name}}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-card-subtitle>
+            sdfsdfsf
+          </ion-card-subtitle>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  }@else {
+    <div class="center-card">
+      <ion-card>
+        <img alt="Imagen de pokemon aleatoria" [src]="searchedPokemon?.sprites?.other?.['official-artwork']?.front_default" />
+        <ion-card-header>
+          <ion-card-title>{{searchedPokemon?.name}}</ion-card-title>
+          <ion-card-subtitle>hola</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          Here's a small text description for the card content. Nothing more, nothing less.
+        </ion-card-content>
+      </ion-card>
+    </div>
+  }
+</ion-content>
