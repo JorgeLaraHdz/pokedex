@@ -26,28 +26,29 @@
   
   @if (showRandom) {
     <div class="center-card">
-      <ion-card>
+      <ion-card (click)="onClick(data?.id)">
         <img alt="Imagen de pokemon aleatoria" [src]="data?.sprites?.other?.['official-artwork']?.front_default" />
         <ion-card-header>
           <ion-card-title>{{data?.name}}</ion-card-title>
         </ion-card-header>
         <ion-card-content>
           <ion-card-subtitle>
-            sdfsdfsf
+            {{data?.types[0].type?.name}}
           </ion-card-subtitle>
         </ion-card-content>
       </ion-card>
     </div>
   }@else {
     <div class="center-card">
-      <ion-card>
+      <ion-card (click)="onClick(searchedPokemon?.id)">
         <img alt="Imagen de pokemon aleatoria" [src]="searchedPokemon?.sprites?.other?.['official-artwork']?.front_default" />
         <ion-card-header>
           <ion-card-title>{{searchedPokemon?.name}}</ion-card-title>
-          <ion-card-subtitle>hola</ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
-          Here's a small text description for the card content. Nothing more, nothing less.
+          <ion-card-subtitle>
+            {{searchedPokemon?.types[0].type?.name}}
+          </ion-card-subtitle>
         </ion-card-content>
       </ion-card>
     </div>

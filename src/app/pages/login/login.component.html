@@ -1,6 +1,9 @@
 <ion-content class="ion-padding">
   <div class="login-container">
     <ion-card>
+      <div class="login-container">
+        <img src="https://png.pngtree.com/png-vector/20220623/ourmid/pngtree-pokemon-game-symbol-pikachu-play-png-image_5289221.png"/>
+      </div>
       <ion-card-header>
         <ion-card-title class="ion-text-center">Iniciar sesión</ion-card-title>
       </ion-card-header>
@@ -14,7 +17,7 @@
             <ion-input label="Contraseña" type="password" formControlName="password" labelPlacement="floating" fill="solid" required></ion-input>
           </ion-item>
 
-          <ion-button expand="block" type="submit" [disabled]="loginForm.invalid">Entrar</ion-button>
+          <ion-button id="boton" expand="block" type="submit" [disabled]="loginForm.invalid">Entrar</ion-button>
         </form>
         <ion-button expand="block" fill="clear" (click)="onRegister()">
           ¿No tienes cuenta? Regístrate

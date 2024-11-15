@@ -14,4 +14,19 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra con un ligero desenfoque */
     border-radius: 20px; /* Opcional, para hacer las esquinas redondeadas */
 }
+#boton{
+  --background:red;
+    color: white;
+}
+ion-button{
+  color: white;
+}
+.ion-text-center{
+  margin-top: 20px;
+  font-size: 32px;
+  font-weight: bold;
+}
+img{
+  width: 80%;
+}
   

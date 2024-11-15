@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { addIcons } from 'ionicons';
 import { eye, eyeOff } from 'ionicons/icons';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
@@ -20,7 +21,7 @@ export class Tab2Page {
   data:any
   searchedPokemon:any
 
-  constructor(private poki:PokeapiService, private loading:LoadingController) {
+  constructor(private poki:PokeapiService, private loading:LoadingController, private router:Router) {
     addIcons({eye});
   }
   ngOnInit(): void {
@@ -68,5 +69,9 @@ export class Tab2Page {
   async onSearchCancel(){
     await this.presentLoading();
     this.showRandom=true;
+  }
+  onClick(id:any){
+    console.log(id);
+    this.router.navigate(['tuPokemon'],id);
   }
 }
