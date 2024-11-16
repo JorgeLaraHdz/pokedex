@@ -48,7 +48,7 @@ export class Tab2Page {
   onSearchChange(event: any) {
     this.query = event.detail.value;
 
-    if (this.query.length > 1) { // Inicia la búsqueda solo si hay más de 1 caracter
+    if (this.query.length > 1) {
       this.poki.searchPokemon(this.query).subscribe(data => {
         this.suggestions = data;
       });
@@ -59,8 +59,8 @@ export class Tab2Page {
   async onSuggestionClick(pokemonName: string) {
     this.showRandom=false
     await this.presentLoading()
-    this.query = pokemonName;  // Autocompleta el searchbar
-    this.suggestions = [];     // Limpia las sugerencias
+    this.query = pokemonName;
+    this.suggestions = [];
     this.poki.getPokemonByName(pokemonName).subscribe((res:any)=>{
       this.searchedPokemon=res;
     })
@@ -72,6 +72,6 @@ export class Tab2Page {
   }
   onClick(id:any){
     console.log(id);
-    this.router.navigate(['tuPokemon'],id);
+    this.router.navigate(['tuPokemon',id]);
   }
 }
