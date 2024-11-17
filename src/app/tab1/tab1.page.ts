@@ -4,6 +4,9 @@ import { ExploreContainerComponent } from '../explore-container/explore-containe
 import { NewserviceService } from '../services/newservice.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+import { addIcons } from 'ionicons';
+import { logOutOutline, powerOutline, text } from 'ionicons/icons';
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
@@ -13,9 +16,12 @@ import { Router } from '@angular/router';
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class Tab1Page{
+
   constructor(private news:NewserviceService,
+    private auth:AuthService,
     private router:Router
-  ) {}
+  ) {
+    addIcons({powerOutline,logOutOutline});}
   data:any
   ngOnInit(): void {
     this.news.getNews().subscribe((res:any)=>{
@@ -29,5 +35,29 @@ export class Tab1Page{
   }
   ir(url:any){
     window.open(url)
+  }
+  logout(){
+    this.auth.logout();
+  }
+  isAlertOpen = false;
+  alertButtons = [
+    {
+      text: 'Cancelar',
+      role: 'cancel',
+      handler: () => {
+        console.log('Operación cancelada');
+      },
+    },
+    {
+      text: 'Aceptar',
+      role: 'confirm',
+      handler: () => {
+        this.logout();
+      },
+    },
+  ];
+
+  setOpen(isOpen: boolean) {
+    this.isAlertOpen = isOpen;
   }
 }

@@ -16,10 +16,11 @@ import {
   IonCardHeader,
   IonCardTitle,
   IonCardSubtitle, IonText, 
-  IonButtons, IonBackButton, IonIcon} from '@ionic/angular/standalone';
+  IonButtons, IonBackButton, IonIcon, IonFab, IonFabButton} from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { addIcons } from 'ionicons';
-import { heart, heartOutline } from 'ionicons/icons';
+import { heart, heartOutline, add } from 'ionicons/icons';
+import { FavoritesService } from 'src/app/services/favorites.service';
 @Component({
   selector: 'app-view-pokemon',
   standalone:true,
@@ -38,17 +39,22 @@ import { heart, heartOutline } from 'ionicons/icons';
     IonCardHeader,
     IonCardTitle,
     IonCardSubtitle,
-    IonButton, IonButtons, IonBackButton, IonIcon, CommonModule]
+    IonButton, IonButtons, IonBackButton, IonIcon, CommonModule, IonFab, IonFabButton]
 })
 export class ViewPokemonComponent  implements OnInit {
 
-  constructor(private route:ActivatedRoute, private poki:PokeapiService, private router:Router) { 
-    addIcons({heart, heartOutline});
+  constructor(private route:ActivatedRoute, 
+    private poki:PokeapiService, 
+    private router:Router,
+    private favoritesService: FavoritesService
+  ) { 
+    addIcons({ heart, 'heart-outline': heartOutline, add });
   }
   id:any
   data:any
   abilities: string = '';
   isFavorite: boolean = false;
+
   ngOnInit() {
     this.id=this.route.snapshot.paramMap.get('id');
     if(this.id==null || undefined){
@@ -58,12 +64,42 @@ export class ViewPokemonComponent  implements OnInit {
         this.data=res;
         this.abilities=res.abilities.map((ability:any)=> ability.ability.name).join(', ');
         console.log(this.abilities)
+
+        this.favoritesService.isFavorite(this.id).then((isFav) => {
+          this.isFavorite = isFav;
+        });
       })
     }
     
   }
   toggleFavorite() {
-    this.isFavorite = !this.isFavorite;
+    if (this.isFavorite) {
+      // Eliminar de favoritos
+      this.favoritesService
+        .removeFavorite(this.id)
+        .then(() => {
+          this.isFavorite = false;
+          console.log('Pokémon eliminado de favoritos');
+        })
+        .catch((error) => console.error('Error al eliminar de favoritos:', error));
+    } else {
+      // Agregar a favoritos
+      this.favoritesService
+        .addFavorite({
+          id: this.id,
+          name: this.data.name,
+          type: this.data.types[0]?.type.name,
+          weight: this.data.weight,
+          height: this.data.height,
+          abilities: this.abilities,
+          image: this.data.sprites?.other?.['official-artwork']?.front_default,
+        })
+        .then(() => {
+          this.isFavorite = true;
+          console.log('Pokémon añadido a favoritos');
+        })
+        .catch((error) => console.error('Error al añadir a favoritos:', error));
+    }
   }
 
 }

@@ -8,3 +8,30 @@ ion-toolbar {
 ion-icon{
     color: white;
 }
+ion-fab-button {
+    --background: #d3291d;
+    --background-activated: #a32218; /* Un tono más oscuro */
+    --background-hover: #bf271a; /* Un tono ligeramente más claro */
+    --border-radius: 15px;
+    --box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3), 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+    --color: white; /* Contrasta mejor con el fondo rojo */
+}
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+  ion-card {
+    max-width: 400px; /* Ajusta el tamaño máximo de la tarjeta según sea necesario */
+    width: 90%; /* Opcional: para mantener un diseño responsivo */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Opcional: para un mejor estilo */
+    border-radius: 30px;
+  }
+  img{
+    width: 200px;
+  }
+  .center-card{
+    text-align: center;
+  }
+  
