@@ -45,4 +45,14 @@ export class FavoritesService {
       throw new Error('Usuario no autenticado');
     }
   }
+  async getFavorites(): Promise<any[]> {
+    const user = getAuth().currentUser;
+    if (user) {
+      const userFavoritesCollection = collection(this.firestore, `favorites/${user.uid}/pokemons`);
+      const snapshot = await getDocs(userFavoritesCollection);
+      return snapshot.docs.map((doc) => doc.data()); // Extraer los datos de cada documento
+    } else {
+      throw new Error('Usuario no autenticado');
+    }
+  }
 }

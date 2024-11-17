@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { initializeApp } from 'firebase/app';
-import { getAuth, signInWithEmailAndPassword, setPersistence, browserLocalPersistence, browserSessionPersistence } from 'firebase/auth';
+import { getAuth,createUserWithEmailAndPassword, signInWithEmailAndPassword, setPersistence, browserLocalPersistence, browserSessionPersistence } from 'firebase/auth';
 import { firebaseConfig } from './firebase-config';
 
 @Injectable({
@@ -34,12 +34,18 @@ export class AuthService {
   
 
   logout() {
-    localStorage.removeItem('sessionExpiration'); // Limpia la expiración
+    localStorage.removeItem('sessionExpiration');
+    localStorage.clear(); // Limpia la expiración
     return this.auth.signOut();
+
   }
   
 
   getAuthInstance() {
     return this.auth;
+  }
+
+  register(email: string, password: string) {
+    return createUserWithEmailAndPassword(this.auth, email, password);
   }
 }

@@ -5,22 +5,25 @@
         <img src="https://png.pngtree.com/png-vector/20220623/ourmid/pngtree-pokemon-game-symbol-pikachu-play-png-image_5289221.png"/>
       </div>
       <ion-card-header>
-        <ion-card-title class="ion-text-center">Iniciar sesión</ion-card-title>
+        <ion-card-title class="ion-text-center">{{ isLogin ? 'Iniciar sesión' : 'Regístrate' }}</ion-card-title>
       </ion-card-header>
 
       <ion-card-content>
-        <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+        <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+          <ion-refresher-content></ion-refresher-content>
+        </ion-refresher>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
           <ion-item>
             <ion-input label="Correo Electrónico" type="email" formControlName="email" labelPlacement="floating" fill="solid" placeholder="Dame tu correo" required></ion-input>
           </ion-item>
           <ion-item>
             <ion-input label="Contraseña" type="password" formControlName="password" labelPlacement="floating" fill="solid" required></ion-input>
           </ion-item>
-
-          <ion-button id="boton" expand="block" type="submit" [disabled]="loginForm.invalid">Entrar</ion-button>
+          <ion-button id="boton" expand="block" type="submit" [disabled]="loginForm.invalid">{{ isLogin ? 'Entrar' : 'Registrarme' }}</ion-button>
         </form>
-        <ion-button expand="block" fill="clear" (click)="onRegister()">
-          ¿No tienes cuenta? Regístrate
+        
+        <ion-button expand="block" fill="clear" (click)="toggleForm()">
+          {{ isLogin ? '¿No tienes cuenta? Regístrate' : '¿Ya tienes cuenta? Inicia sesión' }}
         </ion-button>
       </ion-card-content>
     </ion-card>
