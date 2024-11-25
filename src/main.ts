@@ -1,5 +1,10 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-import { RouteReuseStrategy, provideRouter, withPreloading, PreloadAllModules } from '@angular/router';
+import {
+  RouteReuseStrategy,
+  provideRouter,
+  withPreloading,
+  PreloadAllModules
+} from '@angular/router';
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
 
 import { routes } from './app/app.routes';
@@ -13,12 +18,17 @@ bootstrapApplication(AppComponent, {
     provideRouter(routes, withPreloading(PreloadAllModules)),
     provideHttpClient(withFetch())
   ],
-}).then(()=>{
+}).then(() => {
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/service-worker.js').then((registration) => {
-      console.log('Service Worker registrado con éxito:', registration);
-    }).catch((error) => {
-      console.error('Error al registrar el Service Worker:', error);
-    });
+    navigator.serviceWorker
+      .register('/firebase-messaging-sw.js') // Sin `type: module`
+      .then((registration) => {
+        console.log('Service Worker registrado exitosamente:', registration);
+      })
+      .catch((error) => {
+        console.error('Error al registrar el Service Worker:', error);
+      });
+  } else {
+    console.warn('El navegador no soporta Service Workers.');
   }
 });

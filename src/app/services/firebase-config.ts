@@ -1,3 +1,6 @@
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import {getMessaging, Messaging} from 'firebase/messaging'
 // firebase-config.ts
 export const firebaseConfig = {
     apiKey: "AIzaSyDPBVznrVUXcLFsBcK78daEObcfQjZoBSY",
@@ -8,3 +11,7 @@ export const firebaseConfig = {
     appId: "1:686757224967:web:cddc0bc5bffe8fa93400a2"
   };
   
+  const app = initializeApp(firebaseConfig);
+
+export const auth = getAuth(app);
+export const messaging = getMessaging(app); // Messaging instance
