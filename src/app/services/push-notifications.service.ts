@@ -1,73 +1,75 @@
 import { Injectable } from '@angular/core';
-import { getMessaging, getToken, onMessage } from 'firebase/messaging';
-import { messaging } from './firebase-config'; // Asegúrate de que esta es la configuración correcta
+import { getMessaging, getToken, onMessage, Messaging } from 'firebase/messaging';
+import { messaging } from './firebase-config'; // Importamos la instancia de Messaging
 
 @Injectable({
   providedIn: 'root',
 })
 export class PushNotificationService {
+  private messagingInstance: Messaging = messaging;
+
   constructor() {}
 
-  // Solicitar permiso para notificaciones y obtener el token
+  /**
+   * Solicitar permiso para recibir notificaciones y obtener el token
+   */
   requestPermission() {
     if (Notification.permission === 'granted') {
-      console.log('Permiso para notificaciones ya otorgado');
       this.getTokenAndListenForMessages();
-      return;
+    } else {
+      Notification.requestPermission()
+        .then((permission) => {
+          if (permission === 'granted') {
+            console.log('Permiso otorgado');
+            this.getTokenAndListenForMessages();
+          } else {
+            console.warn('Permiso denegado para notificaciones.');
+          }
+        })
+        .catch((error) => {
+          console.error('Error al solicitar permiso de notificación:', error);
+        });
     }
-
-    Notification.requestPermission().then(permission => {
-      if (permission === 'granted') {
-        console.log('Permiso otorgado');
-        this.getTokenAndListenForMessages();
-      } else {
-        console.log('Permiso denegado');
-      }
-    }).catch(err => {
-      console.error('Error al solicitar permiso de notificación:', err);
-    });
   }
 
-  // Obtener el token de notificación y configurar el listener
+  /**
+   * Obtener el token del dispositivo y configurar el listener para mensajes en primer plano
+   */
   private getTokenAndListenForMessages() {
-    const messagingInstance = getMessaging();
-    getToken(messagingInstance, {
-      vapidKey: 'BOYwDA_9cwajRKrwKH1mE7HCXTI8uCor8WVhvoYJV_9DS_z_pxDMp39ALzVDWqtt5Gw1ocdw7vuFVLH2G7TkAs0'
+    getToken(this.messagingInstance, {
+      vapidKey: 'BOYwDA_9cwajRKrwKH1mE7HCXTI8uCor8WVhvoYJV_9DS_z_pxDMp39ALzVDWqtt5Gw1ocdw7vuFVLH2G7TkAs0',
     })
       .then((currentToken) => {
         if (currentToken) {
-          console.log('Token recibido:', currentToken);
-          // Envía el token al backend si es necesario
         } else {
-          console.warn('No se pudo obtener el token');
+          console.warn('No se pudo obtener el token. Asegúrate de que las configuraciones son correctas.');
         }
       })
-      .catch((err) => {
-        console.error('Error al obtener el token:', err);
+      .catch((error) => {
+        console.error('Error al obtener el token:', error);
       });
 
-    // Escucha mensajes en primer plano
-    this.listenForMessages(messagingInstance);
+    this.listenForMessages();
   }
 
-  // Escuchar mensajes en primer plano
-  private listenForMessages(messagingInstance: any) {
-    onMessage(messagingInstance, (payload) => {
-      console.log('Mensaje recibido en primer plano:', payload);
-      this.showLocalNotification(payload);
+  private listenForMessages() {
+    onMessage(this.messagingInstance, (payload) => {
+      //this.showLocalNotification(payload);
     });
   }
 
-  // Mostrar notificaciones locales
-  private showLocalNotification(payload: any) {
+  /**
+   * Mostrar notificación local en el navegador
+   */
+  showLocalNotification(payload:any) {
     if ('Notification' in window && Notification.permission === 'granted') {
-      const title = payload.notification.title || 'Nueva Notificación';
-      const body = payload.notification.body || 'Has recibido un mensaje';
-      const icon = payload.notification.icon || '/assets/icon/favicon.ico';
+      const title = payload.title;
+      const body = payload.body;
+      const icon = './../../assets/icons/icon-512.webp';
 
       new Notification(title, {
-        body: body,
-        icon: icon,
+        body,
+        icon,
       });
     }
   }

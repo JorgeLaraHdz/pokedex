@@ -3,7 +3,6 @@ import { IonHeader, IonToolbar, IonTitle, IonContent, IonCard } from '@ionic/ang
 import { ExploreContainerComponent } from '../explore-container/explore-container.component';
 import { NewserviceService } from '../services/newservice.service';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { addIcons } from 'ionicons';
 import { logOutOutline, powerOutline, text } from 'ionicons/icons';
@@ -18,8 +17,7 @@ import { logOutOutline, powerOutline, text } from 'ionicons/icons';
 export class Tab1Page{
 
   constructor(private news:NewserviceService,
-    private auth:AuthService,
-    private router:Router
+    private auth:AuthService
   ) {
     addIcons({powerOutline,logOutOutline});}
   data:any
@@ -30,7 +28,6 @@ export class Tab1Page{
         articles.title?.toLowerCase().includes("pokemon")
       );
       this.data=pokemonArticles
-      console.log(this.data)
     })
   }
   ir(url:any){

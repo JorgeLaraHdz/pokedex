@@ -37,7 +37,6 @@ export class Tab2Page {
   ngOnInit(): void {
     this.poki.getPokemon(this.getRandomPokemon()).subscribe((res:any)=>{
       this.data=res;
-      console.log(this.data)
     });
     this.loadPokemons();
   }
@@ -83,7 +82,6 @@ export class Tab2Page {
     this.showRandom=true;
   }
   onClick(id:any){
-    console.log(id);
     this.router.navigate(['tuPokemon',id]);
   }
   //Infinite

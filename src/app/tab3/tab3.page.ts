@@ -35,7 +35,6 @@ export class Tab3Page implements OnInit {
   async loadFavorites() {
     try {
       this.favorites = await this.favoritesService.getFavorites();
-      console.log(this.favorites)
     } catch (error) {
       console.error('Error al cargar favoritos:', error);
     }

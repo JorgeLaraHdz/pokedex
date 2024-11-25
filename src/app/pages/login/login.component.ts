@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.pushis.requestPermission();
+    
    }
 
   toggleForm() {
@@ -70,6 +70,7 @@ export class LoginComponent implements OnInit {
         // Si estamos en login, llamamos al método de login
         this.authService.login(email, password)
           .then((userCredential) => {
+            this.pushis.showLocalNotification({title:"Login Exitoso", body:"Disfruta tu pokedex"});
             console.log('Login exitoso:', userCredential);
             this.router.navigate(['tabs/tab1']); // Redirige al usuario
           })
