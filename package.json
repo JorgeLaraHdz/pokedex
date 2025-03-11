@@ -30,6 +30,7 @@
     "@ionic/angular": "^8.0.0",
     "bootstrap": "^5.3.3",
     "firebase": "^11.0.1",
+    "httpclient": "^0.1.0",
     "ionicons": "^7.4.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
